@@ -1,5 +1,7 @@
 #from django.shortcuts import render
 from django.http import HttpResponse
+from django.template import loader
+
 from .models import Category, Product, Contact, Research
 
 # Create your views here.
@@ -8,7 +10,8 @@ def index(request):
 
     formatted_products = ["<li>{}</li>".format(product.name) for product in products]
     message = """<ul>{}</ul>""".format("\n".join(formatted_products))
-    return HttpResponse(message)
+    template = loader.get_template('catalog/index.html')
+    return HttpResponse(template.render(request=request))
 
 def listing(request):
     products = Product.objects.all()
