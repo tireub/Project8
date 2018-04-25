@@ -1,68 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'catalog/base.html' %}
 
-  <head>
+{% block content %}
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Pur Beurre</title>
 
-    {% load static %}
-
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'catalog/bootstrap/css/bootstrap.min.css' %}" />
-
-    <!-- Custom fonts for this template -->
-    <link href="{% static 'catalog/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-
-    <!-- Plugin CSS -->
-    <link href="{% static 'catalog/magnific-popup/magnific-popup.css' %}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link rel="stylesheet" type="text/css" href="{% static 'catalog/css/creative.css' %}" />
-
-    <!-- Font awesome import -->
-    <link rel="stylesheet" href="https://i.icomoon.io/public/temp/d5c8504831/UntitledProject/style-svg.css">
-    <script defer src="https://i.icomoon.io/public/temp/d5c8504831/UntitledProject/svgxuse.js"></script>
-
-    <link rel="shortcut icon" href="../img/icons/logo/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="../img/icons/logo/favicon.ico" type="image/x-icon">
-  </head>
-
-  <body id="page-top">
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-      <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top"><img src="static/catalog/img/icons/logo/logo_pur_beurre.png" height="40"/>  Pur beurre</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#services">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#portfolio">Portfolio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-    <header class="masthead text-center text-white d-flex">
+<header class="masthead text-center text-white d-flex">
       <div class="container my-auto">
         <div class="row">
           <div class="col-lg-10 mx-auto">
@@ -75,22 +17,22 @@
             <h2 class=""text>
               Trouvez un produit de substitution pour ceux que vous consommez tous les jours.
             </h2>
-            <a class="btn btn-primary btn-xl js-scroll-trigger" href="#about">Find Out More</a>
+            {% include 'catalog/search_form.html' %}
           </div>
         </div>
       </div>
     </header>
 
 
-    <section class="bg-primary" id="founders">
-      <div class="container">
-        <div class="row">
+<section class="bg-primary" id="founders">
+   <div class="container">
+       <div class="row">
           <div class="col-lg-12 text-center">
             <h2 class="section-heading">Colette et Remy</h2>
             <hr class="my-4">
           </div>
         </div>
-      </div>
+   </div>
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
@@ -121,7 +63,7 @@
 
         </div>
       </div>
-    </section>
+</section>
 
 
     <section class="bg-dark text-white" id="contact ">
@@ -149,33 +91,4 @@
       </div>
     </section>
 
-    <section class="bg-primary" id="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 text-center">
-            <p><a href="mentions légales à compléter">Mentions légales.</a></p>
-
-          </div>
-          <div class="col-lg-6 text-center">
-            <p><a href="#contact">Contact.</a></p>
-
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="{% static 'catalog/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'catalog/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-
-    <!-- Plugin JavaScript -->
-    <script src="{% static 'catalog/jquery-easing/jquery.easing.min.js' %}"></script>
-    <script src="{% static 'catalog/scrollreveal/scrollreveal.min.js' %}"></script>
-    <script src="{% static 'catalog/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
-
-    <!-- Custom scripts for this template -->
-    <script src="{% static 'catalog/js/creative.min.js' %}"></script>
-
-  </body>
-
-</html>
+{% endblock %}

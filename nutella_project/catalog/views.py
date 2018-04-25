@@ -1,4 +1,4 @@
-#from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader
 
@@ -6,18 +6,13 @@ from .models import Category, Product, Contact, Research
 
 # Create your views here.
 def index(request):
-    products = Product.objects.filter(nutri_score=5).order_by('-created_at')[:12]
 
-    formatted_products = ["<li>{}</li>".format(product.name) for product in products]
-    message = """<ul>{}</ul>""".format("\n".join(formatted_products))
-    template = loader.get_template('catalog/index.html')
-    return HttpResponse(template.render(request=request))
+    return render(request, 'catalog/index.html')
 
 def listing(request):
     products = Product.objects.all()
-    formatted_products = ["<li>{}</li>".format(product.name) for product in products]
-    message = """<ul>{}</ul>""".format("\n".join(formatted_products))
-    return HttpResponse(message)
+    context = {'products': products}
+    return render(request, 'catalog/list.html', context)
 
 def search(request):
     query = request.GET.get('query')
@@ -32,7 +27,25 @@ def search(request):
         products = ["<li>{}</li>".format(product.name) for product in products]
         message = """
             Nous avons trouvé les produits correspondants : 
+    
             <ul>{}</ul>""".format("".join(products))
 
-    return HttpResponse(message)
+    name = "Résultats pour la requète %s"%query
+    context = {
+        'products': products,
+        'name': name
+
+    }
+    return render(request, 'catalog/search.html', context)
+
+def detail(request, product_id):
+    product = get_object_or_404(Product, pk=product_id)
+    message = "Le nom du produit est {}.".format(product.name)
+    context = {
+        'product_name': product.name,
+        'product_score': product.nutri_score,
+        'thumbnail': product.picture,
+        'product_id': product.id,
+    }
+    return render(request, 'catalog/detail.html', context)
 

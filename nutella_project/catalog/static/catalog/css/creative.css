@@ -214,6 +214,11 @@ header.masthead p {
   }
 }
 
+.box {
+    margin-bottom: 20px;
+    padding: 30px 2%;
+}
+
 .service-box {
   max-width: 400px;
 }
