@@ -4,6 +4,8 @@ from django.template import loader
 
 from .models import Category, Product, Contact, Research
 
+from .apiload import fillelement, Db_product
+
 # Create your views here.
 def index(request):
 
@@ -40,6 +42,20 @@ def search(request):
 
 def detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
+    message = "Le nom du produit est {}.".format(product.name)
+    context = {
+        'product_name': product.name,
+        'product_score': product.nutri_score,
+        'thumbnail': product.picture,
+        'product_id': product.id,
+    }
+    return render(request, 'catalog/detail.html', context)
+
+
+def fill_db(request):
+    link = 'https://world.openfoodfacts.org/country/france/245.json'
+    fillelement(link)
+    product = get_object_or_404(Product, pk=1)
     message = "Le nom du produit est {}.".format(product.name)
     context = {
         'product_name': product.name,
