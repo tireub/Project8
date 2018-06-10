@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
-from django.template import loader
-
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.db import IntegrityError
 from .models import Category, Product, Contact, Research
 
+
 from .apiload import fillelement, Db_product
+
 
 # Create your views here.
 def index(request):
@@ -13,32 +16,43 @@ def index(request):
 
 def listing(request):
     products = Product.objects.all()
-    context = {'products': products}
+    paginator = Paginator(products, 9)
+    page = request.GET.get('page')
+    try:
+        list = paginator.page(page)
+    except PageNotAnInteger:
+        list = paginator.page(1)
+    except EmptyPage:
+        list = paginator.page(paginator.num_pages)
+
+    context = {'products': list, 'paginate': True}
     return render(request, 'catalog/list.html', context)
 
 def search(request):
-    query = request.GET.get('query')
+    query = request.GET.get('search')
     if not query:
         products = Product.objects.all()
     else:
-            products = Product.objects.filter(name__icontains=query)
+        products = Product.objects.filter(
+            categories__name__icontains=query).order_by('nutri_score')
 
     if not products.exists():
-        message = "Misère, on a rien !"
-    else:
-        products = ["<li>{}</li>".format(product.name) for product in products]
-        message = """
-            Nous avons trouvé les produits correspondants : 
-    
-            <ul>{}</ul>""".format("".join(products))
+        products = Product.objects.filter(
+            name__icontains=query).order_by('nutri_score')
 
-    name = "Résultats pour la requète %s"%query
-    context = {
-        'products': products,
-        'name': name
+    paginator = Paginator(products, 9)
+    page = request.GET.get('page')
 
-    }
-    return render(request, 'catalog/search.html', context)
+    try:
+        list = paginator.page(page)
+    except PageNotAnInteger:
+        list = paginator.page(1)
+    except EmptyPage:
+        list = paginator.page(paginator.num_pages)
+
+    context = {'products': list, 'paginate': True, 'name': query}
+    return render(request, 'catalog/list.html', context)
+
 
 def detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
@@ -53,9 +67,11 @@ def detail(request, product_id):
 
 
 def fill_db(request):
-    link = 'https://world.openfoodfacts.org/country/france/245.json'
-    fillelement(link)
-    product = get_object_or_404(Product, pk=1)
+    for a in range(3990,4000):
+        link = ('https://world.openfoodfacts.org/country/france/%d.json' % a)
+        fillelement(link)
+
+    product = get_object_or_404(Product, pk=1015)
     message = "Le nom du produit est {}.".format(product.name)
     context = {
         'product_name': product.name,
@@ -65,3 +81,22 @@ def fill_db(request):
     }
     return render(request, 'catalog/detail.html', context)
 
+def account(request):
+    return render(request, 'catalog/account.html')
+
+def saved_products(request):
+    return render(request, 'catalog/myproducts.html')
+
+@login_required
+def save(request, product_id, user_id):
+    product = get_object_or_404(Product, pk=product_id)
+    user = get_object_or_404(User, pk=user_id)
+    try:
+        query = Research(contact=user, product=product)
+        query.save()
+    except IntegrityError:
+        Research.objects.filter(contact=user, product=product).delete()
+
+
+
+    return render(request, 'catalog/myproducts.html')

@@ -22,5 +22,18 @@
         </div>
     </div>
 </section>
+{% if paginate %}
+     <div class="clearfix"></div>
+    <nav aria-label="">
+        <ul class="pager">
+            {% if products.has_previous %}
+                <li><a href="?search={{ name }}&page={{ products.previous_page_number }}">Précédent</a></li>
+            {% endif %}
+            {% if products.has_next %}
+                <li><a href="?search={{ name }}&page={{ products.next_page_number }}">Suivant</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
 
 {% endblock %}

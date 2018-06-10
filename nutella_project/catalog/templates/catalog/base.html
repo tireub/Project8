@@ -46,17 +46,18 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="{% url 'fill_db'  %}">Test load</a>
+              {% include 'catalog/search_form.html' %}
             </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#services">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="{% url 'listing' %}">Tous les produits</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
-            </li>
+            {% if user.is_authenticated %}
+              <li><a href="{% url 'account' %}">User: {{ user.get_username }}</a></li>
+              <li><a href="{% url 'saved_products' %}">Mes produits</a></li>
+              <li><a href="{% url 'logout'%}?next={{request.path}}">Déconnexion</a></li>
+            {% else %}
+              <li><a href="{% url 'login' %}?next={{request.path}}">Login</a></li>
+              <li><a href="{% url 'login' %}?next={% url 'saved_products' %}">Mes produits</a></li>
+              <li><a href="{% url 'index' %}">Déconnexion</a></li>
+            {% endif %}
+
           </ul>
         </div>
       </div>

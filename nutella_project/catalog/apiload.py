@@ -33,7 +33,7 @@ class Db_product:
 
     def jsonread(self, json_file):
         if 'product_name_fr' in json_file:
-            self.name = json_file['product_name_fr']
+            self.name = json_file['product_name_fr'][:199]
 
         if 'code' in json_file:
             self.link = 'https://fr.openfoodfacts.org/produit/' + \

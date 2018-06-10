@@ -2,7 +2,12 @@
 
 {% block content %}
 
+{% if products|length_is:"0" %}
+    <div class="text-center">
+      Nous n'avons trouvé aucun résultat à cette requête.
+    </div>
 
+{% else %}
 <section class="bg-primary" id="list">
 
     <div class="box">
@@ -14,6 +19,7 @@
                     <img class="img-responsive" src="{{ product.picture }}" alt="{{ product.name }}">
                 </a>
                 <h3><a href="{% url 'detail' product_id=product.id %}">{{ product.name }}</a></h3>
+                <h3><a href="{% url 'save' product_id=product.id user_id=user.id%}">Sauvegarder</a></h3>
             </div>
 
             {% if  forloop.counter|divisibleby:3 %}</div><div class="row">{% endif %}
@@ -22,5 +28,20 @@
         </div>
     </div>
 </section>
+{% endif %}
+
+{% if paginate %}
+     <div class="clearfix"></div>
+    <nav aria-label="">
+        <ul class="pager">
+            {% if products.has_previous %}
+                <li><a href="?search={{ name }}&page={{ products.previous_page_number }}">Précédent</a></li>
+            {% endif %}
+            {% if products.has_next %}
+                <li><a href="?search={{ name }}&page={{ products.next_page_number }}">Suivant</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endif %}
 
 {% endblock %}
