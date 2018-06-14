@@ -29,7 +29,10 @@ def listing(request):
     return render(request, 'catalog/list.html', context)
 
 def search(request):
+
     query = request.GET.get('search')
+
+
     if not query:
         products = Product.objects.all()
     else:
@@ -39,6 +42,7 @@ def search(request):
     if not products.exists():
         products = Product.objects.filter(
             name__icontains=query).order_by('nutri_score')
+
 
     paginator = Paginator(products, 9)
     page = request.GET.get('page')
@@ -53,6 +57,27 @@ def search(request):
     context = {'products': list, 'paginate': True, 'name': query}
     return render(request, 'catalog/list.html', context)
 
+def search_cat(request, cat):
+    products = Product.objects.filter(
+        categories__name__icontains=cat).order_by('nutri_score')
+
+    if not products.exists():
+        products = Product.objects.filter(
+            name__icontains=cat).order_by('nutri_score')
+
+    paginator = Paginator(products, 9)
+    page = request.GET.get('page')
+
+    try:
+        list = paginator.page(page)
+    except PageNotAnInteger:
+        list = paginator.page(1)
+    except EmptyPage:
+        list = paginator.page(paginator.num_pages)
+
+    context = {'products': list, 'paginate': True, 'name': cat}
+    return render(request, 'catalog/list.html', context)
+
 
 def detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
@@ -62,6 +87,8 @@ def detail(request, product_id):
         'product_score': product.nutri_score,
         'thumbnail': product.picture,
         'product_id': product.id,
+        'categories': product.categories.all,
+        'link': product.link,
     }
     return render(request, 'catalog/detail.html', context)
 
@@ -84,19 +111,51 @@ def fill_db(request):
 def account(request):
     return render(request, 'catalog/account.html')
 
-def saved_products(request):
-    return render(request, 'catalog/myproducts.html')
+
 
 @login_required
-def save(request, product_id, user_id):
+def save(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    user = get_object_or_404(User, pk=user_id)
+    user = request.user
     try:
         query = Research(contact=user, product=product)
         query.save()
     except IntegrityError:
         Research.objects.filter(contact=user, product=product).delete()
 
+    products = Product.objects.filter(
+        research__contact=user)
+
+    paginator = Paginator(products, 9)
+    page = request.GET.get('page')
+
+    try:
+        list = paginator.page(page)
+    except PageNotAnInteger:
+        list = paginator.page(1)
+    except EmptyPage:
+        list = paginator.page(paginator.num_pages)
+
+    context = {'products': list, 'paginate': True,
+               'name': "Produits sauvegardés"}
+    return render(request, 'catalog/list.html', context)
+
+@login_required
+def saved_products(request):
+    user = request.user
+    products = Product.objects.filter(
+        research__contact=user)
 
 
-    return render(request, 'catalog/myproducts.html')
+    paginator = Paginator(products, 9)
+    page = request.GET.get('page')
+
+    try:
+        list = paginator.page(page)
+    except PageNotAnInteger:
+        list = paginator.page(1)
+    except EmptyPage:
+        list = paginator.page(paginator.num_pages)
+
+    context = {'products': list, 'paginate': True, 'name': "Produits sauvegardés"}
+    return render(request, 'catalog/list.html', context)

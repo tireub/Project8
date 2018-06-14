@@ -217,6 +217,8 @@ header.masthead p {
 .box {
     margin-bottom: 20px;
     padding: 30px 2%;
+    background-color:(0, 0, 0, 0.5);
+
 }
 
 .service-box {
@@ -317,4 +319,28 @@ header.masthead p {
 }
 
 /* CUSTOM */
+.images {
+    height: 200px;
+    width: auto;
+    max-width: 80%;
+
+}
+
+.footer {
+    height: 40px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 1rem;
+  background-color: #efefef;
+  text-align: center;
+}
+
+
+.intro-text {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
 

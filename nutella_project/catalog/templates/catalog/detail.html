@@ -1,36 +1,40 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
+{% load static %}
 
-<hr>
-<h1 class="intro-text text-center">{{ product_name }}</h1>
-<hr class="detail-separator">
-<div class="col-md-6">
-  <img src="{{ thumbnail }}" alt="{{ product_name }}" class="img-responsive">
+<div class="text-center bg-dark text-white" id="food_name" style="height: 25%">
+  <h1 class="intro-text text-center" >{{ product_name }}</h1>
 </div>
-<div class="col-md-6">
-  <div style="margin-bottom:45px">
-    <h2 class="text-center artist_name">Nutri-score</h2>
-    <p>{{ product_score }}</p>
+
+<div class="bg-primary" style="padding:2%; height:58%">
+
+  <div class="row" >
+    <div class="col-lg-4 col-md-4 text-center">
+      <img src="{{ thumbnail }}" alt="{{ product_name }}" class="img-responsive">
+    </div>
+    <div class="col-lg-4 col-md-4">
+      <div style="margin-bottom:45px">
+        <h2 class="text-center">Nutri-score</h2>
+          <img src="{% static 'catalog/img/icons/Score/nutriscore-4.svg' %}" alt="{{ product_name }}" class="img-responsive">
+        <p>{{ product_score }}</p>
+
+      </div>
+      <div class="text-center" >
+        <a href="{{ link }}" >Voir la fiche OpenFoodFacts</a>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4 ">
+      <h2 class="text-center" >Catégories</h2>
+      <ul>
+      {% for cat in categories %}
+        <li><a href="{% url 'search_cat' cat=cat.name %}">{{ cat.name }}</a></li>
+      {% endfor %}
+      </ul>
+    </div>
   </div>
-
-  <h2 class="text-center artist_name">Réserver {{ album_title }}</h2>
-  <p style="margin-bottom: 20px;">Demandez-nous de mettre de côté {{ album_title }} et venez le chercher dès demain en magasin ! </p>
-  <form class="form-inline" action="/" method="post">
-
-    <div class="form-group">
-      <label for="name" class="control-label">Nom</label>
-      <input type="text" name="name" value="" id="name">
-    </div>
-    <div class="form-group">
-      <label for="email" class="control-label">E-mail</label>
-      <input type="text" name="email" value="" id="email">
-    </div>
-    <!-- <input type="hidden" class="hidden" value="" name="album_id"> -->
-
-    <button type="submit" class="btn btn-success">Réserver</button>
-  </form>
-
 </div>
+
+
 
 {% endblock %}
