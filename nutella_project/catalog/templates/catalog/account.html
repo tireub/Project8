@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-test de la page compte
-</body>
-</html>
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+{% load static %}
+
+<div class="text-center bg-dark text-white" id="food_name" style="height: 25%">
+  <h1 class="intro-text text-center" >{{ user.first_name }}</h1>
+</div>
+
+<div class="bg-primary" style="padding:2%; height:65%">
+
+  <div class="row" >
+    <div class="col-lg-12 col-md-12 text-center">
+      Prénom: {{ user.first_name }}<br>
+      Nom: {{ user.last_name }}<br>
+      Email: {{ user.email }}<br>
+    </div>
+
+  </div>
+</div>
+
+
+
+{% endblock %}

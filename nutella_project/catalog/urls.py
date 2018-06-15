@@ -13,6 +13,7 @@ urlpatterns = [
     path('account', views.account, name="account"),
     path('save/<product_id>/', views.save, name="save"),
     path('saved_products', views.saved_products, name="saved_products"),
+    path('conditions', views.conditions, name="conditions"),
 
 
     ]

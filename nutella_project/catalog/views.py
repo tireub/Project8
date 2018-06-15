@@ -108,10 +108,12 @@ def fill_db(request):
     }
     return render(request, 'catalog/detail.html', context)
 
+@login_required
 def account(request):
     return render(request, 'catalog/account.html')
 
-
+def conditions(request):
+    return render(request, 'catalog/conditions.html')
 
 @login_required
 def save(request, product_id):
@@ -159,3 +161,5 @@ def saved_products(request):
 
     context = {'products': list, 'paginate': True, 'name': "Produits sauvegardés"}
     return render(request, 'catalog/list.html', context)
+
+

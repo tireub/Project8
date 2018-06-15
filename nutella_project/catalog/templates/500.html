@@ -1,1 +1,10 @@
-Erreur 500 à modifier
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+
+<p><em>Nous n'avons pas trouvé ce que vous cherchiez.<br>
+    Un autre essai serait le bienvenu.</em></p>
+
+{% include 'store/search_form.html' %}
+
+{% endblock %}

@@ -326,16 +326,6 @@ header.masthead p {
 
 }
 
-.footer {
-    height: 40px;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
-  background-color: #efefef;
-  text-align: center;
-}
 
 
 .intro-text {
@@ -344,3 +334,14 @@ header.masthead p {
     transform: translateY(-50%);
 }
 
+
+#prod_pic
+{
+  position:relative;
+}
+
+#pic2{
+  position:absolute;
+  top:-80px;
+  left:250px;
+}

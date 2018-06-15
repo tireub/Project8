@@ -1,6 +1,7 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
+{% load static %}
 
 <div class="text-center bg-dark text-white" id="food_name" style="height: 25%">
 <h1 class="intro-text text-center" >{{ name }}</h1>
@@ -21,9 +22,12 @@
 
                 {% for product in products %}
                 <div class="col-lg-4 col-md-4 text-center" style="padding:20px;">
+                    <div id="prod_pic">
                     <a href="{% url 'detail' product_id=product.id %}">
-                        <img class="images" src="{{ product.picture }}" alt="{{ product.name }}">
+                        <img id="pic1" class="images" src="{{ product.picture }}" alt="{{ product.name }}">
+                        <img id="pic2" src="{% static 'catalog/img/icons/Score/1.svg' %}">
                     </a>
+                    </div>
                     <h3><a href="{% url 'detail' product_id=product.id %}">{{ product.name }}</a></h3>
                     <h4><a href="{% url 'save' product_id=product.id %}"><i class="fa far fa-save" style="color:Black"></i>  Sauvegarder</a></h4>
                 </div>

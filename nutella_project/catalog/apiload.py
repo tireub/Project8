@@ -4,6 +4,7 @@ import requests
 import unicodedata
 import datetime
 
+
 from .models import Category, Product, Store
 
 
@@ -107,6 +108,9 @@ class Db_product:
                 c = Store.objects.get(name=store)
                 c.products.add(product.pk)
 
+def right_ns(product):
+    score = product.nutri_score
+    return ('catalog/img/icons/Score/nutriscore-'+score+'.svg')
 
 
 
