@@ -25,7 +25,22 @@
                     <div id="prod_pic">
                     <a href="{% url 'detail' product_id=product.id %}">
                         <img id="pic1" class="images" src="{{ product.picture }}" alt="{{ product.name }}">
-                        <img id="pic2" src="{% static 'catalog/img/icons/Score/1.svg' %}">
+                        {% if product.nutri_score == 1 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/1.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 2 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/2.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 3 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/3.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 4 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/4.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 5 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/5.svg' %}">
+                        {% endif %}
+
                     </a>
                     </div>
                     <h3><a href="{% url 'detail' product_id=product.id %}">{{ product.name }}</a></h3>

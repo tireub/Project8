@@ -16,8 +16,22 @@
     <div class="col-lg-4 col-md-4">
       <div style="margin-bottom:45px">
         <h2 class="text-center">Nutri-score</h2>
-           <img src="{% static 'catalog/img/icons/Score/nutriscore-2.svg' %}" alt="{{ product_name }}" class="img-responsive">
-        <p>{{ product_score }}</p>
+        {% if product_score == 1 %}
+          <img src="{% static 'catalog/img/icons/Score/nutriscore-1.svg' %}" alt="{{ product_name }}" class="img-responsive">
+        {% endif %}
+        {% if product_score == 2 %}
+          <img src="{% static 'catalog/img/icons/Score/nutriscore-2.svg' %}" alt="{{ product_name }}" class="img-responsive">
+        {% endif %}
+        {% if product_score == 3 %}
+          <img src="{% static 'catalog/img/icons/Score/nutriscore-3.svg' %}" alt="{{ product_name }}" class="img-responsive">
+        {% endif %}
+        {% if product_score == 4 %}
+          <img src="{% static 'catalog/img/icons/Score/nutriscore-4.svg' %}" alt="{{ product_name }}" class="img-responsive">
+        {% endif %}
+        {% if product_score == 5 %}
+          <img src="{% static 'catalog/img/icons/Score/nutriscore-5.svg' %}" alt="{{ product_name }}" class="img-responsive">
+        {% endif %}
+
 
       </div>
       <div class="text-center" >
