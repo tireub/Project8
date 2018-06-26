@@ -18,7 +18,6 @@ def fillelement(link):
             test.add_aliment()
 
 
-
 class Db_product:
 
     def __init__(self):
@@ -29,8 +28,6 @@ class Db_product:
         self.created_at = ''
         self.categories = []
         self.stores = []
-
-
 
     def jsonread(self, json_file):
         if 'product_name_fr' in json_file:
@@ -80,37 +77,34 @@ class Db_product:
                 query.save()
 
                 self.add_categories(query)
-                if len(self.stores) != 0 :
+                if len(self.stores) != 0:
                     self.add_stores(query)
-
 
     def add_categories(self, product):
         for cat in self.categories:
-            if len(Category.objects.filter(name = cat)) != 0 :
-                c = Category.objects.get(name = cat)
+            if len(Category.objects.filter(name=cat)) != 0:
+                c = Category.objects.get(name=cat)
                 c.products.add(product.pk)
 
             else:
-                query = Category(name = cat)
+                query = Category(name=cat)
                 query.save()
                 c = Category.objects.get(name=cat)
                 c.products.add(product.pk)
 
     def add_stores(self, product):
         for store in self.stores:
-            if len(Store.objects.filter(name = store)) != 0 :
-                c = Store.objects.get(name = store)
+            if len(Store.objects.filter(name=store)) != 0:
+                c = Store.objects.get(name=store)
                 c.products.add(product.pk)
 
             else:
-                query = Store(name = store)
+                query = Store(name=store)
                 query.save()
                 c = Store.objects.get(name=store)
                 c.products.add(product.pk)
 
+
 def right_ns(product):
     score = product.nutri_score
     return ('catalog/img/icons/Score/nutriscore-'+score+'.svg')
-
-
-

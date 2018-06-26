@@ -14,6 +14,7 @@ def index(request):
 
     return render(request, 'catalog/index.html')
 
+
 def listing(request):
     products = Product.objects.all()
     paginator = Paginator(products, 9)
@@ -28,10 +29,10 @@ def listing(request):
     context = {'products': list, 'paginate': True}
     return render(request, 'catalog/list.html', context)
 
+
 def search(request):
 
     query = request.GET.get('search')
-
 
     if not query:
         products = Product.objects.all()
@@ -42,7 +43,6 @@ def search(request):
     if not products.exists():
         products = Product.objects.filter(
             name__icontains=query).order_by('nutri_score')
-
 
     paginator = Paginator(products, 9)
     page = request.GET.get('page')
@@ -56,6 +56,7 @@ def search(request):
 
     context = {'products': list, 'paginate': True, 'name': query}
     return render(request, 'catalog/list.html', context)
+
 
 def search_cat(request, cat):
     products = Product.objects.filter(
@@ -94,7 +95,7 @@ def detail(request, product_id):
 
 
 def fill_db(request):
-    for a in range(3990,4000):
+    for a in range(3990, 4000):
         link = ('https://world.openfoodfacts.org/country/france/%d.json' % a)
         fillelement(link)
 
@@ -108,12 +109,15 @@ def fill_db(request):
     }
     return render(request, 'catalog/detail.html', context)
 
+
 @login_required
 def account(request):
     return render(request, 'catalog/account.html')
 
+
 def conditions(request):
     return render(request, 'catalog/conditions.html')
+
 
 @login_required
 def save(request, product_id):
@@ -142,12 +146,12 @@ def save(request, product_id):
                'name': "Produits sauvegardés"}
     return render(request, 'catalog/list.html', context)
 
+
 @login_required
 def saved_products(request):
     user = request.user
     products = Product.objects.filter(
         research__contact=user)
-
 
     paginator = Paginator(products, 9)
     page = request.GET.get('page')
@@ -159,7 +163,6 @@ def saved_products(request):
     except EmptyPage:
         list = paginator.page(paginator.num_pages)
 
-    context = {'products': list, 'paginate': True, 'name': "Produits sauvegardés"}
+    context = {'products': list, 'paginate': True,
+               'name': "Produits sauvegardés"}
     return render(request, 'catalog/list.html', context)
-
-

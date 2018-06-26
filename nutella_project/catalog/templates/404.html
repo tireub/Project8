@@ -1,13 +1,25 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
+{% load static %}
 
-<p><em>I'm lost. I'm like a king without a throne.</em></p>
-    <p>L'album que vous demandez est parti écouter Sarah Vaughan à la suite d'une rupture sentimentale.</p>
-    <p>Nous partons à l'instant même le secourir !</p>
-    {% include 'store/search_form.html' %}
-    <div class="embed-responsive embed-responsive-16by9">
-        <iframe src="https://www.youtube.com/embed/E9Rl1GvTsiA" frameborder="0" allowfullscreen></iframe>
+<div class="text-center bg-dark text-white" id="food_name" style="height: 25%">
+  <h1 class="intro-text text-center" >Oups.</h1>
+</div>
+
+<div class="bg-primary" style="padding:2%; height:65%">
+
+  <div class="row" >
+    <div class="col-lg-12 col-md-12 text-center">
+      Il semblerait qu'il y ait eu une erreur dans votre navigation.
+        Revenez en arrière ou tentez autre chose
     </div>
+
+  </div>
+
+     {% include 'catalog/search_form.html' %}
+</div>
+
+
 
 {% endblock %}

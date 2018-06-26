@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+
 class Product(models.Model):
     name = models.CharField('Nom', max_length=200, unique=True)
     picture = models.URLField('Image')
@@ -20,13 +21,12 @@ class Product(models.Model):
 
 class Contact(models.Model):
     name = models.CharField('Nom', max_length=40, unique=True)
-    email = models.EmailField('Adresse Mail' ,max_length=100, unique=True)
+    email = models.EmailField('Adresse Mail', max_length=100, unique=True)
     password = models.CharField('Mot de Passe', max_length=20, unique=True)
     objects = models.Manager()
 
     def __str__(self):
         return self.name
-
 
 
 class Research(models.Model):
@@ -37,27 +37,32 @@ class Research(models.Model):
 
     def __str__(self):
         return self.product.name
+
     class Meta:
         verbose_name = "Réservation"
 
+
 class Category(models.Model):
     name = models.CharField('Nom', max_length=200, unique=True)
-    products = models.ManyToManyField(Product, related_name='categories', blank=True)
+    products = models.ManyToManyField(Product, related_name='categories',
+                                      blank=True)
     objects = models.Manager()
 
     def __str__(self):
         return self.name
+
     class Meta:
         verbose_name = "Catégorie"
 
 
 class Store(models.Model):
     name = models.CharField('Nom', max_length=200)
-    products = models.ManyToManyField(Product, related_name='stores', blank=True)
+    products = models.ManyToManyField(Product, related_name='stores',
+                                      blank=True)
     objects = models.Manager()
 
     def __str__(self):
         return self.name
+
     class Meta:
         verbose_name = "Magasin"
-
