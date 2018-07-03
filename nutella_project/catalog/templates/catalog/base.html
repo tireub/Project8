@@ -8,7 +8,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Pur Beurre</title>
+    <title>
+      {% if title == null %}
+        Pur Beurre
+      {% else %}
+        {{ title }}
+      {% endif %}
+    </title>
 
     {% load static %}
 
@@ -30,7 +36,7 @@
     <link rel="stylesheet" href="https://i.icomoon.io/public/temp/d5c8504831/UntitledProject/style-svg.css">
     <script defer src="https://i.icomoon.io/public/temp/d5c8504831/UntitledProject/svgxuse.js"></script>
 
-    <link rel="shortcut icon" href="../img/icons/logo/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'catalog/img/icons/logo/favicon.ico' %}" type="image/x-icon">
     <link rel="icon" href="../img/icons/logo/favicon.ico" type="image/x-icon">
   </head>
 
@@ -45,7 +51,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto" id="rightnav">
-            <li class="nav-item">
+            <li class="nav-item" >
               {% include 'catalog/search_form.html' %}
             </li>
             {% if user.is_authenticated %}
@@ -54,8 +60,7 @@
               <li><a href="{% url 'logout'%}?next={% url 'index' %}"><i class="fa fa-3x mb-3 fas fa-sign-out" style="color:#E8A75D"></i></a></li>
             {% else %}
               <li><a href="{% url 'login' %}?next={{request.path}}"><i class="fa fa-3x far fa-user" style="color:#E8A75D"></i></a></li>
-              <li><a href="{% url 'login' %}?next={% url 'saved_products' %}"><img src="{% static 'catalog/img/icons/Icons/carrot.svg' %}" alt="Mes produits" style="height:42px"></a></li>
-              <li><a href="{% url 'index' %}"><i class="fa fa-3x mb-3 fas fa-sign-out" style="color:#E8A75D"></i></a></li>
+
             {% endif %}
 
           </ul>

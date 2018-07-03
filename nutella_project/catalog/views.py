@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from .models import Category, Product, Contact, Research
+from django.shortcuts import redirect
+
 
 
 from .apiload import fillelement, Db_product
@@ -11,8 +13,9 @@ from .apiload import fillelement, Db_product
 
 # Create your views here.
 def index(request):
+    context = {'title':'Pur Beurre'}
 
-    return render(request, 'catalog/index.html')
+    return render(request, 'catalog/index.html', context)
 
 
 def listing(request):
@@ -26,7 +29,7 @@ def listing(request):
     except EmptyPage:
         list = paginator.page(paginator.num_pages)
 
-    context = {'products': list, 'paginate': True}
+    context = {'products': list, 'paginate': True, 'title':'Listing'}
     return render(request, 'catalog/list.html', context)
 
 
@@ -54,7 +57,7 @@ def search(request):
     except EmptyPage:
         list = paginator.page(paginator.num_pages)
 
-    context = {'products': list, 'paginate': True, 'name': query}
+    context = {'products': list, 'paginate': True, 'name': query, 'title':'Recherche'}
     return render(request, 'catalog/list.html', context)
 
 
@@ -76,7 +79,7 @@ def search_cat(request, cat):
     except EmptyPage:
         list = paginator.page(paginator.num_pages)
 
-    context = {'products': list, 'paginate': True, 'name': cat}
+    context = {'products': list, 'paginate': True, 'name': cat, 'title':'Recherche'}
     return render(request, 'catalog/list.html', context)
 
 
@@ -90,6 +93,7 @@ def detail(request, product_id):
         'product_id': product.id,
         'categories': product.categories.all,
         'link': product.link,
+        'title': 'Aliment'
     }
     return render(request, 'catalog/detail.html', context)
 
@@ -112,11 +116,13 @@ def fill_db(request):
 
 @login_required
 def account(request):
-    return render(request, 'catalog/account.html')
+    context = {'title':'Compte'}
+    return render(request, 'catalog/account.html', context)
 
 
 def conditions(request):
-    return render(request, 'catalog/conditions.html')
+    context = {'title':'Mentions légales'}
+    return render(request, 'catalog/conditions.html', context)
 
 
 @login_required
@@ -129,22 +135,7 @@ def save(request, product_id):
     except IntegrityError:
         Research.objects.filter(contact=user, product=product).delete()
 
-    products = Product.objects.filter(
-        research__contact=user)
-
-    paginator = Paginator(products, 9)
-    page = request.GET.get('page')
-
-    try:
-        list = paginator.page(page)
-    except PageNotAnInteger:
-        list = paginator.page(1)
-    except EmptyPage:
-        list = paginator.page(paginator.num_pages)
-
-    context = {'products': list, 'paginate': True,
-               'name': "Produits sauvegardés"}
-    return render(request, 'catalog/list.html', context)
+    return redirect('saved_products')
 
 
 @login_required
@@ -164,5 +155,6 @@ def saved_products(request):
         list = paginator.page(paginator.num_pages)
 
     context = {'products': list, 'paginate': True,
-               'name': "Produits sauvegardés"}
+               'name': 'Produits sauvegardés',
+               'title': 'Produits sauvegardés'}
     return render(request, 'catalog/list.html', context)

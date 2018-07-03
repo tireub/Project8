@@ -44,7 +44,13 @@
                     </a>
                     </div>
                     <h3><a href="{% url 'detail' product_id=product.id %}">{{ product.name }}</a></h3>
-                    <h4><a href="{% url 'save' product_id=product.id %}"><i class="fa far fa-save" style="color:Black"></i>  Sauvegarder</a></h4>
+                    <h4><a href="{% url 'save' product_id=product.id %}"><i class="fa far fa-save" style="color:Black"></i>
+                        {% if title == "Produits sauvegardés" %}
+                            Supprimer
+                        {% else %}
+                            Sauvegarder
+                        {% endif %}
+                    </a></h4>
                 </div>
 
 
