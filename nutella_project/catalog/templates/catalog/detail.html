@@ -16,6 +16,7 @@
     <div class="col-lg-4 col-md-4">
       <div style="margin-bottom:45px">
         <h2 class="text-center">Nutri-score</h2>
+        <div class="col-lg-10 mx-auto">
         {% if product_score == 1 %}
           <img src="{% static 'catalog/img/icons/Score/nutriscore-1.svg' %}" alt="{{ product_name }}" class="img-responsive">
         {% endif %}
@@ -31,11 +32,13 @@
         {% if product_score == 5 %}
           <img src="{% static 'catalog/img/icons/Score/nutriscore-5.svg' %}" alt="{{ product_name }}" class="img-responsive">
         {% endif %}
+        </div>
 
 
       </div>
       <div class="text-center" >
         <a href="{{ link }}" >Voir la fiche OpenFoodFacts</a>
+
       </div>
     </div>
     <div class="col-lg-4 col-md-4 ">

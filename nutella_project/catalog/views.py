@@ -1,19 +1,19 @@
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.db import IntegrityError
-from .models import Category, Product, Contact, Research
+from .models import Product, Research
 from django.shortcuts import redirect
+from .forms import RegistrationForm
+from django.contrib.auth import login
 
-
-
-from .apiload import fillelement, Db_product
+from .functions import search_product, search_substitute
+from .apiload import fillelement
 
 
 # Create your views here.
 def index(request):
-    context = {'title':'Pur Beurre'}
+    context = {'title': 'Pur Beurre'}
 
     return render(request, 'catalog/index.html', context)
 
@@ -29,7 +29,7 @@ def listing(request):
     except EmptyPage:
         list = paginator.page(paginator.num_pages)
 
-    context = {'products': list, 'paginate': True, 'title':'Listing'}
+    context = {'products': list, 'paginate': True, 'title': 'Listing'}
     return render(request, 'catalog/list.html', context)
 
 
@@ -37,55 +37,49 @@ def search(request):
 
     query = request.GET.get('search')
 
-    if not query:
-        products = Product.objects.all()
+    searched_product = search_product(query)
+
+    [nbr, results] = search_substitute(searched_product)
+
+    if nbr == 0:
+        return render(request, 'catalog/noresults.html')
+
     else:
-        products = Product.objects.filter(
-            categories__name__icontains=query).order_by('nutri_score')
-
-    if not products.exists():
-        products = Product.objects.filter(
-            name__icontains=query).order_by('nutri_score')
-
-    paginator = Paginator(products, 9)
-    page = request.GET.get('page')
-
-    try:
-        list = paginator.page(page)
-    except PageNotAnInteger:
-        list = paginator.page(1)
-    except EmptyPage:
-        list = paginator.page(paginator.num_pages)
-
-    context = {'products': list, 'paginate': True, 'name': query, 'title':'Recherche'}
-    return render(request, 'catalog/list.html', context)
+        context = {'searched_product': searched_product, 'cat_nbr': nbr,
+                   'cat1': results[0], 'products1': results[1],
+                   'cat2': results[2], 'products2': results[3],
+                   'cat3': results[4], 'products3': results[5],
+                   'title': 'Substitution'
+                   }
+        return render(request, 'catalog/results.html', context)
 
 
 def search_cat(request, cat):
-    products = Product.objects.filter(
-        categories__name__icontains=cat).order_by('nutri_score')
+    if cat == '':
+        return render(request, 'catalog/noresults.html')
 
-    if not products.exists():
+    else:
         products = Product.objects.filter(
-            name__icontains=cat).order_by('nutri_score')
+            categories__name=cat).order_by('nutri_score')
 
-    paginator = Paginator(products, 9)
-    page = request.GET.get('page')
+        paginator = Paginator(products, 9)
+        page = request.GET.get('page')
 
-    try:
-        list = paginator.page(page)
-    except PageNotAnInteger:
-        list = paginator.page(1)
-    except EmptyPage:
-        list = paginator.page(paginator.num_pages)
+        try:
+            list = paginator.page(page)
+        except PageNotAnInteger:
+            list = paginator.page(1)
+        except EmptyPage:
+            list = paginator.page(paginator.num_pages)
 
-    context = {'products': list, 'paginate': True, 'name': cat, 'title':'Recherche'}
-    return render(request, 'catalog/list.html', context)
+        context = {'products': list, 'paginate': True,
+                   'name': cat, 'title': 'Recherche'}
+        return render(request, 'catalog/list.html', context)
 
 
 def detail(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-    message = "Le nom du produit est {}.".format(product.name)
+
     context = {
         'product_name': product.name,
         'product_score': product.nutri_score,
@@ -104,7 +98,7 @@ def fill_db(request):
         fillelement(link)
 
     product = get_object_or_404(Product, pk=1015)
-    message = "Le nom du produit est {}.".format(product.name)
+
     context = {
         'product_name': product.name,
         'product_score': product.nutri_score,
@@ -116,12 +110,12 @@ def fill_db(request):
 
 @login_required
 def account(request):
-    context = {'title':'Compte'}
+    context = {'title': 'Compte'}
     return render(request, 'catalog/account.html', context)
 
 
 def conditions(request):
-    context = {'title':'Mentions légales'}
+    context = {'title': 'Mentions légales'}
     return render(request, 'catalog/conditions.html', context)
 
 
@@ -158,3 +152,24 @@ def saved_products(request):
                'name': 'Produits sauvegardés',
                'title': 'Produits sauvegardés'}
     return render(request, 'catalog/list.html', context)
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+
+            return redirect('index')
+        else:
+            form = RegistrationForm()
+
+            args = {'form': form}
+            return render(request, 'registration/new_account.html', args)
+
+    else:
+        form = RegistrationForm()
+
+        args = {'form': form}
+        return render(request, 'registration/new_account.html', args)

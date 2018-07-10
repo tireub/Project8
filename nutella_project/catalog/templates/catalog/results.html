@@ -1,0 +1,161 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+{% load static %}
+<body>
+<div class="text-center bg-dark text-white" id="food_name" style="height: 25%">
+    <h1 class="intro-text text-center"><a href="{% url 'detail' product_id=searched_product.id %}" style="color:white">{{ searched_product }}</a></h1>
+</div>
+
+<div class="bg-primary" id="list" style="padding-top:20px; padding-bottom:20px">
+
+    <div class="container">
+        <div class="box" style="background-color:rgba(255, 255, 255, 0.2);">
+            <div class="row" style="height:80px">
+                <div class="col-lg-12 col-md-12 text-center">
+                    <h2><a href="{% url 'search_cat' cat=cat1 %}">
+                        {{ cat1 }}
+                    </a></h2>
+                </div>
+            </div>
+            <div class="row" >
+
+                {% for product in products1 %}
+                <div class="col-lg-4 col-md-4 text-center" style="padding:20px;">
+                    <div id="prod_pic">
+                    <a href="{% url 'detail' product_id=product.id %}">
+                        <img id="pic1" class="images" src="{{ product.picture }}" alt="{{ product.name }}">
+                        {% if product.nutri_score == 1 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/1.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 2 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/2.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 3 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/3.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 4 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/4.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 5 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/5.svg' %}">
+                        {% endif %}
+
+                    </a>
+                    </div>
+                    <h3><a href="{% url 'detail' product_id=product.id %}">{{ product.name }}</a></h3>
+                    <h4><a href="{% url 'save' product_id=product.id %}"><i class="fa far fa-save" style="color:Black"></i>
+                        {% if title == "Produits sauvegardés" %}
+                            Supprimer
+                        {% else %}
+                            Sauvegarder
+                        {% endif %}
+                    </a></h4>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% if cat2 != '' %}
+    <div class="container">
+        <div class="box" style="background-color:rgba(255, 255, 255, 0.2);">
+            <div class="row" style="height:80px">
+                <div class="col-lg-12 col-md-12 text-center">
+                    <h2><a href="{% url 'search_cat' cat=cat2 %}">
+                        {{ cat2 }}
+                    </a></h2>
+                </div>
+            </div>
+            <div class="row">
+
+                {% for product in products2 %}
+                <div class="col-lg-4 col-md-4 text-center" style="padding:20px;">
+                    <div id="prod_pic">
+                    <a href="{% url 'detail' product_id=product.id %}">
+                        <img id="pic1" class="images" src="{{ product.picture }}" alt="{{ product.name }}">
+                        {% if product.nutri_score == 1 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/1.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 2 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/2.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 3 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/3.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 4 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/4.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 5 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/5.svg' %}">
+                        {% endif %}
+
+                    </a>
+                    </div>
+                    <h3><a href="{% url 'detail' product_id=product.id %}">{{ product.name }}</a></h3>
+                    <h4><a href="{% url 'save' product_id=product.id %}"><i class="fa far fa-save" style="color:Black"></i>
+                        {% if title == "Produits sauvegardés" %}
+                            Supprimer
+                        {% else %}
+                            Sauvegarder
+                        {% endif %}
+                    </a></h4>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% if cat3 != '' %}
+    <div class="container">
+        <div class="box" style="background-color:rgba(255, 255, 255, 0.2);">
+            <div class="row" style="height:80px">
+                <div class="col-lg-12 col-md-12 text-center">
+                    <h2><a href="{% url 'search_cat' cat=cat3 %}">
+                        {{ cat3 }}
+                    </a></h2>
+                </div>
+            </div>
+            <div class="row">
+
+                {% for product in products3 %}
+                <div class="col-lg-4 col-md-4 text-center" style="padding:20px;">
+                    <div id="prod_pic">
+                    <a href="{% url 'detail' product_id=product.id %}">
+                        <img id="pic1" class="images" src="{{ product.picture }}" alt="{{ product.name }}">
+                        {% if product.nutri_score == 1 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/1.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 2 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/2.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 3 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/3.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 4 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/4.svg' %}">
+                        {% endif %}
+                        {% if product.nutri_score == 5 %}
+                            <img id="pic2" src="{% static 'catalog/img/icons/Score/5.svg' %}">
+                        {% endif %}
+
+                    </a>
+                    </div>
+                    <h3><a href="{% url 'detail' product_id=product.id %}">{{ product.name }}</a></h3>
+                    <h4><a href="{% url 'save' product_id=product.id %}"><i class="fa far fa-save" style="color:Black"></i>
+                        {% if title == "Produits sauvegardés" %}
+                            Supprimer
+                        {% else %}
+                            Sauvegarder
+                        {% endif %}
+                    </a></h4>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+</body>
+
+{% endblock %}

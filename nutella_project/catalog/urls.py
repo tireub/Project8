@@ -15,4 +15,5 @@ urlpatterns = [
     path('saved_products', views.saved_products, name="saved_products"),
     path('conditions', views.conditions, name="conditions"),
 
+
     ]
