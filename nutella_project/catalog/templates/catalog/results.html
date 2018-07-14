@@ -4,11 +4,25 @@
 {% load static %}
 <body>
 <div class="text-center bg-dark text-white" id="food_name" style="height: 25%">
-    <h1 class="intro-text text-center"><a href="{% url 'detail' product_id=searched_product.id %}" style="color:white">{{ searched_product }}</a></h1>
+    <h1 class="intro-text text-center">Substitution pour : <a href="{% url 'detail' product_id=searched_product.id %}" style="color:white">{{ searched_product }}</a></h1>
 </div>
 
-<div class="bg-primary" id="list" style="padding-top:20px; padding-bottom:20px">
-
+{% if cat1 == '' %}
+<div class="bg-primary" id="list" style="padding-top:20px; padding-bottom:20px; height:90%">
+    <div class="container" >
+        <div class="box" style="background-color:rgba(255, 255, 255, 0.2);">
+            <div class="row" style="height:80px">
+                <div class="col-lg-12 col-md-12 text-center">
+                    <h2>
+                        Nous n'avons pas trouvé de substitution pour ce produit.
+                        Veuillez essayer une nouvelle recherche.
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="bg-primary" id="list" style="padding-top:20px; padding-bottom:20px">
     <div class="container">
         <div class="box" style="background-color:rgba(255, 255, 255, 0.2);">
             <div class="row" style="height:80px">
@@ -56,6 +70,7 @@
             </div>
         </div>
     </div>
+    {% endif %}
     {% if cat2 != '' %}
     <div class="container">
         <div class="box" style="background-color:rgba(255, 255, 255, 0.2);">
@@ -153,7 +168,7 @@
             </div>
         </div>
     </div>
-    {% endif %}
+{% endif %}
 </div>
 
 </body>

@@ -73,7 +73,7 @@ def search_cat(request, cat):
             list = paginator.page(paginator.num_pages)
 
         context = {'products': list, 'paginate': True,
-                   'name': cat, 'title': 'Recherche'}
+                   'name': cat, 'title': 'Catégorie'}
         return render(request, 'catalog/list.html', context)
 
 

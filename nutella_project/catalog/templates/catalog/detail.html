@@ -45,7 +45,9 @@
       <h2 class="text-center" >Catégories</h2>
       <ul>
       {% for cat in categories %}
+        {% if cat.name != '' %}
         <li><a href="{% url 'search_cat' cat=cat.name %}">{{ cat.name }}</a></li>
+        {% endif %}
       {% endfor %}
       </ul>
     </div>

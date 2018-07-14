@@ -2,9 +2,31 @@
 
 {% block content %}
 
-<p><em>Nous n'avons pas trouvé ce que vous cherchiez.<br>
-    Un autre essai serait le bienvenu.</em></p>
+<div class="text-center bg-dark text-white" id="food_name" style="height: 25%">
+  <h1 class="intro-text text-center" >Oups.</h1>
+</div>
 
-{% include 'store/search_form.html' %}
+
+<section>
+
+<div class="bg-primary" id="list" style="padding-top:20px; padding-bottom:20px; height:65%">
+    <div class="container my-auto" >
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h2 class="text">
+                Nous n'avons pas trouvé ce que vous cherchiez.<br>
+    Un autre essai serait le bienvenu.
+                </h2>
+                <hr>
+            </div>
+            <div class="col-lg-8 mx-auto">
+                <center>{% include 'catalog/search_form.html' %}</center>
+            </div>
+        </div>
+    </div>
+</div>
+
+</section>
+
 
 {% endblock %}

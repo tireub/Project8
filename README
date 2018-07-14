@@ -1,0 +1,69 @@
+This project is realised as part of the Python Applications Developper cursus
+at Openclassrooms.
+
+The point of the project is to answer a request from a client about the
+development of a merchant website that focuses on providing replacements for
+day-to-day consumed products. The point is to get similar products with a
+better nutritionnal value.
+
+-------------------------------------------------------------------------------
+
+Project has been developped using the Django framework. Codename for the project
+is nutella_project.
+
+
+The structure for this project is pretty standard for a django project.
+
+
+The nutella_project subfolder contains the root files allowing the app to
+properly work (init, settings, root urls and wsgi). It's to be noted that the
+version hosted here is te development version. For production the settings are
+quite different, as one can assume.
+
+-------------------------------------------------------------------------------
+
+The main part of the app is stored in the catalog subfolder.
+Appart form the usual files that can be found in any django project, there is
+a python file named apiload, which has been used to fill the database with data
+from the openfoodfacts API. Currently these functions are not used by the app
+but should be in the future with the implementation of regular update of the
+database.
+functions.py contains the main research algorithm which tries to find the
+closest match in the database for a request and then offers substitution
+products depending on the above product categories.
+forms.py is used for the user registration.
+
+Views names are as self-explanatory as posible. The fill_db function is not used
+anymore but can be modified in the future for the update feature.
+
+Models contains the requested elements regarding the database of products.
+It also contains a stores element as the client mentionned that it would be
+used in the next version of the website.
+
+-------------------------------------------------------------------------------
+
+The database is supported by MySQL.
+Approximately 1/4 of the Openfoodfacts database has been imported within our
+database.
+
+-------------------------------------------------------------------------------
+
+Templates names are self-explanatory and can be easily linked to the appropriate
+view.
+
+They have been separated in two distinct parts, one for the catalog pages in
+general and one for the registration and user management.
+
+-------------------------------------------------------------------------------
+
+
+THINGS TO IMPROVE:
+
+- Some parts of the front could be improved (footer, some responsive features).
+- For the search algorithm, one could find already existing research algorithms
+to apply that would be less sensitive to spelling mistakes or could use some
+relevance factor to better match the item requested on which to get the
+substitution results.
+- Import from the API could be improved, as the OFF database is quite big and
+not always really clear.
+- ...
