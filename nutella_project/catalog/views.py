@@ -42,7 +42,8 @@ def search(request):
     [nbr, results] = search_substitute(searched_product)
 
     if nbr == 0:
-        return render(request, 'catalog/noresults.html')
+        context = {'title': 'Aucun résultat'}
+        return render(request, 'catalog/noresults.html', context)
 
     else:
         context = {'searched_product': searched_product, 'cat_nbr': nbr,

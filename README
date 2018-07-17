@@ -8,8 +8,8 @@ better nutritionnal value.
 
 -------------------------------------------------------------------------------
 
-Project has been developped using the Django framework. Codename for the project
-is nutella_project.
+Project has been developped using the Django framework. Codename for the
+project is nutella_project.
 
 
 The structure for this project is pretty standard for a django project.
@@ -33,8 +33,8 @@ closest match in the database for a request and then offers substitution
 products depending on the above product categories.
 forms.py is used for the user registration.
 
-Views names are as self-explanatory as posible. The fill_db function is not used
-anymore but can be modified in the future for the update feature.
+Views names are as self-explanatory as posible. The fill_db function is not
+used anymore but can be modified in the future for the update feature.
 
 Models contains the requested elements regarding the database of products.
 It also contains a stores element as the client mentionned that it would be
@@ -48,14 +48,18 @@ database.
 
 -------------------------------------------------------------------------------
 
-Templates names are self-explanatory and can be easily linked to the appropriate
-view.
+Templates names are self-explanatory and can be easily linked to the
+appropriate view.
 
 They have been separated in two distinct parts, one for the catalog pages in
 general and one for the registration and user management.
 
 -------------------------------------------------------------------------------
 
+The site is currently hosted on Heroku and can be found at this adress:
+https://guillaume-nutella.herokuapp.com
+
+-------------------------------------------------------------------------------
 
 THINGS TO IMPROVE:
 
